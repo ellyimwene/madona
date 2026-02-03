@@ -1,0 +1,586 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.music-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.music-icon {
+    font-size: 20px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.volume-slider {
+    width: 100px;
+    cursor: pointer;
+    accent-color: #ff6b9d;
+}
+
+.volume-label {
+    font-size: 12px;
+    color: #333;
+    min-width: 30px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    max-height: 700px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.stage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stage.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.stage-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    position: relative;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 245, 0.95) 100%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* STAGE 1 - INTRODUCTION */
+.stage-1 .stage-content {
+    background: linear-gradient(135deg, #ffe5ec 0%, #fff0f5 100%);
+}
+
+.glowing-circle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 107, 157, 0.3), rgba(255, 107, 157, 0));
+    border-radius: 50%;
+    animation: glow-pulse 3s ease-in-out infinite;
+    top: -50px;
+    right: -50px;
+}
+
+.hearts-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 30px;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.floating-heart:nth-child(1) { animation: float 6s ease-in-out infinite; left: 10%; top: 20%; animation-delay: 0s; }
+.floating-heart:nth-child(2) { animation: float 7s ease-in-out infinite; left: 80%; top: 30%; animation-delay: 1s; }
+.floating-heart:nth-child(3) { animation: float 5s ease-in-out infinite; left: 50%; top: 10%; animation-delay: 2s; }
+.floating-heart:nth-child(4) { animation: float 8s ease-in-out infinite; left: 20%; top: 70%; animation-delay: 0.5s; }
+.floating-heart:nth-child(5) { animation: float 6.5s ease-in-out infinite; left: 85%; top: 70%; animation-delay: 1.5s; }
+
+/* STAGE 2 - VALENTINE QUESTION */
+.stage-2 .stage-content {
+    background: linear-gradient(135deg, #ffe5f0 0%, #ffb3d9 50%, #ff99cc 100%);
+}
+
+.petals-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.petal {
+    position: absolute;
+    font-size: 40px;
+    animation: fall-petal 8s linear infinite;
+    opacity: 0.7;
+}
+
+.petal:nth-child(1) { left: 10%; animation-delay: 0s; }
+.petal:nth-child(2) { left: 30%; animation-delay: 1.5s; }
+.petal:nth-child(3) { left: 50%; animation-delay: 0.8s; }
+.petal:nth-child(4) { left: 70%; animation-delay: 2s; }
+.petal:nth-child(5) { left: 90%; animation-delay: 1.2s; }
+
+.hearts-burst {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.burst-heart {
+    position: absolute;
+    font-size: 30px;
+    animation: burst 0.8s ease-out forwards;
+}
+
+/* STAGE 3 - LOVE MESSAGE */
+.stage-3 .stage-content {
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe8f1 100%);
+}
+
+.pulse-light {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 107, 157, 0.2), transparent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sparkles-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffb3d9;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out forwards;
+}
+
+/* STAGE 4 - WHATSAPP */
+.stage-4 .stage-content {
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe5ec 100%);
+}
+
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.confetti {
+    position: absolute;
+    animation: fall-confetti 3s ease-in forwards;
+}
+
+.heart-animation {
+    margin: 20px 0;
+    position: relative;
+    z-index: 10;
+}
+
+.big-heart {
+    display: inline-block;
+    font-size: 80px;
+    animation: pulse-heart 1.5s ease-in-out infinite;
+}
+
+/* TEXT ANIMATIONS */
+.stage-body {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.title {
+    font-size: 48px;
+    color: #ff6b9d;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.message {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.sub-message {
+    font-size: 18px;
+    color: #666;
+    font-style: italic;
+}
+
+.question {
+    font-size: 36px;
+    color: #d63384;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.love-message {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.8;
+    max-width: 400px;
+    font-weight: 500;
+}
+
+.final-message {
+    font-size: 40px;
+    color: #ff6b9d;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.final-subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 14px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    position: relative;
+    z-index: 20;
+    margin: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff6b9d 0%, #d63384 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(255, 107, 157, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(200, 200, 200, 0.3);
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: rgba(200, 200, 200, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: white;
+    font-size: 18px;
+    padding: 16px 35px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-icon {
+    font-size: 24px;
+}
+
+.bounce-btn:hover {
+    animation: button-bounce 0.6s ease-in-out;
+}
+
+/* CONTROLS */
+.controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    z-index: 100;
+}
+
+.stage-indicator {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* FOOTER */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 12px;
+    z-index: 50;
+    backdrop-filter: blur(5px);
+}
+
+.footer p {
+    margin: 3px 0;
+}
+
+.footer a {
+    color: #ff6b9d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* KEYFRAME ANIMATIONS */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-30px) rotate(10deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+}
+
+@keyframes zoom-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes button-bounce {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    75% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fall-petal {
+    from {
+        transform: translateY(-20px) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    to {
+        transform: translateY(700px) translateX(20px);
+        opacity: 0;
+    }
+}
+
+@keyframes burst {
+    from {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: var(--tx, 0) var(--ty, 0) scale(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-heart {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes sparkle {
+    from {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--tx, 0), var(--ty, 0)) scale(0);
+    }
+}
+
+@keyframes fall-confetti {
+    from {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(700px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Apply animations to elements */
+.zoom-in {
+    animation: zoom-in 0.8s ease-out forwards;
+}
+
+.fade-in {
+    animation: fade-in 1s ease-out forwards;
+}
+
+.bounce {
+    animation: bounce 0.8s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .title {
+        font-size: 36px;
+    }
+
+    .message {
+        font-size: 16px;
+    }
+
+    .question {
+        font-size: 28px;
+    }
+
+    .love-message {
+        font-size: 16px;
+    }
+
+    .music-player {
+        top: 10px;
+        right: 10px;
+        padding: 10px 15px;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
